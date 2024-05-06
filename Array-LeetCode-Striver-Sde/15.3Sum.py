@@ -29,8 +29,49 @@
 #             if(not isAvailable):
 #                 res.append(ls)        
 #         return res
+
+# BETTER (O(N^2))
+
+
+# class Solution:
+#     def threeSum(self, nums: List[int]) -> List[List[int]]:
+#         res_set=set()
+#         hash_set=set()
+#         for i in range(len(nums)):
+#             for j in range(i+1,len(nums)):
+#                 remaining=-(nums[i]+nums[j])
+#                 if(remaining in hash_set):
+#                     new_entry=[nums[i],nums[j],remaining]
+#                     list.sort(new_entry)
+#                     new_entry=tuple(new_entry)
+#                     res_set.add(new_entry)
+#                 hash_set.add(nums[j])
+#             hash_set.clear()              
+#         return list(res_set)
+
+
 class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
+    def threeSum(self, nums):
+        list.sort(nums)
+        res_set=set()
+        i,j,k=0,0,0
+        while(i<len(nums)-2):
+            j=i+1
+            k=len(nums)-1
+            while(k>j):
+                sum=nums[i]+nums[j]+nums[k]
+                if(sum==0):
+                    res_set.add((i,j,k))
+                    j+=1
+                    k-=1
+                elif(sum<0):
+                    j+=1
+                else:
+                    k-=1
+            i+=1            
+        return list(res_set)
+
+
         
 def main():
     s1=Solution()
